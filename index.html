@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sravani & Bhasker Rao - Wedding</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef, #ffecd2);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            padding: 30px 20px 10px;
+            animation: fadeInDown 1.5s ease;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #8B0045;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            font-family: 'Georgia', serif;
+        }
+
+        .header p {
+            color: #c0006a;
+            font-size: 1.2em;
+            margin-top: 8px;
+        }
+
+        .hearts {
+            font-size: 2em;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .map-container {
+            width: 95%;
+            max-width: 800px;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(139, 0, 69, 0.4);
+            border: 4px solid #ff69b4;
+            margin: 20px auto;
+            animation: fadeIn 2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .welcome-box {
+            background: linear-gradient(135deg, #fff0f5, #ffe4e8);
+            border: 3px solid #ff69b4;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            margin: 20px auto;
+            box-shadow: 0 8px 30px rgba(255, 105, 180, 0.3);
+            animation: slideUp 2s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-box h2 {
+            color: #8B0045;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .welcome-box p {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .invite-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff69b4, #8B0045);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            box-shadow: 0 5px 20px rgba(139, 0, 69, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .invite-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 30px rgba(139, 0, 69, 0.6);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 5px 20px rgba(139, 0, 69, 0.4); }
+            50% { box-shadow: 0 5px 30px rgba(139, 0, 69, 0.8); }
+        }
+
+        .floating-flowers {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 1.5em;
+            animation: fall linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes fall {
+            from { transform: translateY(-50px) rotate(0deg); opacity: 0.8; }
+            to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .date-badge {
+            background: #8B0045;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        /* Leaflet popup custom style */
+        .couple-popup {
+            text-align: center;
+            font-family: Georgia, serif;
+        }
+
+        .couple-popup h3 {
+            color: #8B0045;
+            font-size: 1.3em;
+        }
+
+        .couple-popup p {
+            color: #555;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Flowers Background -->
+<div class="floating-flowers" id="flowers"></div>
+
+<!-- Header -->
+<div class="header">
+    <div class="hearts">💑</div>
+    <h1>Sravani & Bhasker Rao</h1>
+    <p>మా వివాహానికి స్వాగతం 🌸</p>
+    <div class="date-badge">📅 May 10, 2026</div>
+</div>
+
+<!-- Map -->
+<div class="map-container">
+    <div id="map"></div>
+</div>
+
+<!-- Welcome Box -->
+<div class="welcome-box">
+    <h2>🌺 శుభాకాంక్షలు! 🌺</h2>
+    <p>
+        మీరు <strong>Sravani & Bhasker Rao</strong> వివాహ వేడుకకు ఆహ్వానించబడ్డారు!<br><br>
+        📍 <strong>బురుగ గ్రామం, వీరఘట్టం మండలం</strong><br>
+        పార్వతీపురం మాన్య జిల్లా, ఆంధ్రప్రదేశ్<br><br>
+        మీ రాక మాకు చాలా సంతోషాన్ని కలిగిస్తుంది! 💖
+    </p>
+    <a href="wedding.html" class="invite-btn">
+        💌 వివాహ ఆహ్వానం చూడండి
+    </a>
+</div>
+
+<br><br>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    // Floating flowers animation
+    const flowersDiv = document.getElementById('flowers');
+    const emojis = ['🌸', '🌺', '💐', '🌹', '🌼', '💮', '🏵️'];
+    
+    for (let i = 0; i < 20; i++) {
+        const flower = document.createElement('div');
+        flower.classList.add('flower');
+        flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        flower.style.left = Math.random() * 100 + 'vw';
+        flower.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        flower.style.animationDelay = (Math.random() * 5) + 's';
+        flower.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
+        flowersDiv.appendChild(flower);
+    }
+
+    // Map Setup
+    // Coordinates for Buruga Village, Vieeraghattam, AP
+    const lat = 18.6827;
+    const lng = 83.5723;
+
+    const map = L.map('map', {
+        zoomAnimation: true,
+        fadeAnimation: true
+    }).setView([lat, lng], 5);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    // Animate zoom to location
+    setTimeout(() => {
+        map.flyTo([lat, lng], 15, {
+            animate: true,
+            duration: 3
+        });
+    }, 1000);
+
+    // Custom Toy Couple Icon
+    const coupleIcon = L.divIcon({
+        html: `
+            <div style="
+                font-size: 40px;
+                text-align: center;
+                animation: bounce 1s infinite;
+                filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+            ">👫</div>
+            <style>
+                @keyframes bounce {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-10px); }
+                }
+            </style>
+        `,
+        iconSize: [50, 50],
+        iconAnchor: [25, 50],
+        popupAnchor: [0, -50],
+        className: ''
+    });
+
+    // Add Marker
+    const marker = L.marker([lat, lng], { icon: coupleIcon }).addTo(map);
+
+    // Popup Content
+    marker.bindPopup(`
+        <div class="couple-popup">
+            <h3>💑 Sravani & Bhasker Rao</h3>
+            <p>📍 బురుగ గ్రామం</p>
+            <p>వీరఘట్టం మండలం</p>
+            <p>పార్వతీపురం మాన్య జిల్లా</p>
+            <p>📅 May 10, 2026</p>
+            <br>
+            <a href="wedding.html" style="
+                background: #8B0045;
+                color: white;
+                padding: 8px 20px;
+                border-radius: 20px;
+                text-decoration: none;
+                font-weight: bold;
+            ">💌 ఆహ్వానం చూడండి</a>
+        </div>
+    `, { maxWidth: 250 });
+
+    // Auto open popup after zoom
+    setTimeout(() => {
+        marker.openPopup();
+    }, 4500);
+</script>
+
+</body>
+</html>

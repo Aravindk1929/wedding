@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sravani & Bhasker Rao - Wedding Invitation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0010, #3d0025, #1a0010);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Animated Stars Background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle linear infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, rgba(139,0,69,0.3), transparent);
+        }
+
+        .hero-flowers {
+            font-size: 3em;
+            animation: sway 3s ease-in-out infinite;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            color: #FFD700;
+            text-shadow: 3px 3px 10px rgba(255, 215, 0, 0.5);
+            animation: glow 2s ease-in-out infinite;
+            line-height: 1.2;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 3px 3px 10px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 3px 3px 30px rgba(255, 215, 0, 1); }
+        }
+
+        .hero h2 {
+            font-size: 1.8em;
+            color: #ffb6c1;
+            margin: 15px 0;
+            animation: fadeIn 2s ease;
+        }
+
+        .divider {
+            font-size: 2em;
+            margin: 20px 0;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        /* Telugu Message */
+        .telugu-msg {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, rgba(139,0,69,0.6), rgba(255,105,180,0.2));
+            border: 2px solid #ff69b4;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .telugu-msg h2 {
+            color: #FFD700;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .telugu-msg p {
+            font-size: 1.3em;
+            line-height: 2;
+            color: #ffe4e8;
+        }
+
+        /* Video Section */
+        .video-section {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .video-section h2 {
+            color: #FFD700;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .video-wrapper {
+            max-width: 700px;
+            width: 90%;
+            margin: 0 auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 4px solid #ff69b4;
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.5);
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            display: block;
+        }
+
+        /* No video placeholder */
+        .video-placeholder {
+            background: linear-gradient(135deg, #3d0025, #8B0045);
+            padding: 80px 40px;
+            text-align: center;
+            border-radius: 16px;
+        }
+
+        .video-placeholder .play-icon {
+            font-size: 5em;
+            display: block;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Details Section */
+        .details {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .detail-card {
+            background: linear-gradient(135deg, rgba(139,0,69,0.7), rgba(255,105,180,0.2));
+            border: 2px solid #ff69b4;
+            border-radius: 20px;
+            padding: 30px 25px;
+            text-align: center;
+            flex: 1;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .detail-card .icon {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .detail-card h3 {
+            color: #FFD700;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .detail-card p {
+            color: #ffe4e8;
+            font-size: 1em;
+            line-height: 1.8;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Countdown Section */
+        .countdown {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .countdown h2 {
+            color: #FFD700;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .countdown-boxes {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-box {
+            background: linear-gradient(135deg, #8B0045, #ff69b4);
+            border-radius: 15px;
+            padding: 20px 25px;
+            min-width: 100px;
+            box-shadow: 0 5px 20px rgba(255, 105, 180, 0.4);
+        }
+
+        .countdown-box .number {
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            display: block;
+        }
+
+        .countdown-box .label {
+            color: #ffe4e8;
+            font-size: 0.9em;
+        }
+
+        /* Footer */
+        .footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(0deg, rgba(139,0,69,0.5), transparent);
+        }
+
+        .footer h2 {
+            color: #FFD700;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            animation: glow 2s infinite;
+        }
+
+        .footer p {
+            color: #ffb6c1;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff69b4, #8B0045);
+            color: white;
+            padding: 12px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1em;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Confetti */
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+            animation: confettiFall linear infinite;
+            z-index: 999;
+            pointer-events: none;
+        }
+
+        @keyframes confettiFall {
+            from { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.2em; }
+            .hero h2 { font-size: 1.3em; }
+            .telugu-msg p { font-size: 1.1em; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Stars Background -->
+<div class="stars" id="stars"></div>
+
+<!-- Confetti -->
+<div id="confetti"></div>
+
+<!-- Hero Section -->
+<div class="hero">
+    <span class="hero-flowers">🌸🌺🌸</span>
+    <h1>శుభ వివాహం</h1>
+    <h1>Sravani 💍 Bhasker Rao</h1>
+    <div class="divider">💖 ❤️ 💖</div>
+    <h2>మా వివాహ వేడుకకు మీకు హార్దిక స్వాగతం!</h2>
+    <h2>Heartiest Welcome to Our Wedding Celebration!</h2>
+</div>
+
+<!-- Telugu Invitation Message -->
+<div class="telugu-msg">
+    <h2>🌺 వివాహ ఆహ్వానం 🌺</h2>
+    <p>
+        శ్రీమతి / శ్రీ యొక్క ప్రియమైన కుమార్తె<br>
+        <strong style="color:#FFD700; font-size:1.2em;">శ్రావణి</strong><br>
+        మరియు<br>
+        ప్రియమైన కుమారుడు<br>
+        <strong style="color:#FFD700; font-size:1.2em;">భాస్కర్ రావు</strong><br><br>
+        వివాహ మహోత్సవం అత్యంత వైభవంగా జరుగుతుంది.<br>
+        మీ శుభాశీస్సులతో మా వేడుకను సంపూర్ణం చేయగలరు. 🙏<br><br>
+        <span style="color:#ff69b4;">
+            "వివాహం అనేది రెండు ఆత్మల మిలనం,<br>
+            ప్రేమతో, విశ్వాసంతో, జీవితాంతం! 💕"
+        </span>
+    </p>
+</div>
+
+<!-- Wedding Details Cards -->
+<div class="details">
+    <div class="detail-card">
+        <span class="icon">📅</span>
+        <h3>వివాహ తేదీ</h3>
+        <p>
+            <strong>May 10, 2026</strong><br>
+            ఆదివారం<br>
+            శుభ ముహూర్తం
+        </p>
+    </div>
+
+    <div class="detail-card">
+        <span class="icon">📍</span>
+        <h3>వివాహ స్థలం</h3>
+        <p>
+            3-74, బురుగ గ్రామం<br>
+            వీరఘట్టం మండలం<br>
+            పార్వతీపురం మాన్య జిల్లా<br>
+            ఆంధ్రప్రదేశ్ - 532460
+        </p>
+    </div>
+
+    <div class="detail-card">
+        <span class="icon">🎊</span>
+        <h3>వేడుక వివరాలు</h3>
+        <p>
+            శాస్త్రోక్తంగా<br>
+            వేద మంత్రాలతో<br>
+            వైభవంగా జరుగుతుంది<br>
+            అందరూ దయచేసి రావలెను
+        </p>
+    </div>
+</div>
+
+<!-- Countdown Section -->
+<div class="countdown">
+    <h2>⏳ వివాహానికి మిగిలిన సమయం</h2>
+    <div class="countdown-boxes">
+        <div class="countdown-box">
+            <span class="number" id="days">--</span>
+            <span class="label">రోజులు / Days</span>
+        </div>
+        <div class="countdown-box">
+            <span class="number" id="hours">--</span>
+            <span class="label">గంటలు / Hours</span>
+        </div>
+        <div class="countdown-box">
+            <span class="number" id="minutes">--</span>
+            <span class="label">నిమిషాలు / Min</span>
+        </div>
+        <div class="countdown-box">
+            <span class="number" id="seconds">--</span>
+            <span class="label">సెకన్లు / Sec</span>
+        </div>
+    </div>
+</div>
+
+<!-- Video Section -->
+<div class="video-section">
+    <h2>🎬 వివాహ ఆహ్వాన వీడియో</h2>
+    <div class="video-wrapper">
+        <!-- 
+            ADD YOUR VIDEO HERE:
+            Option 1: Upload your video file and use:
+            <video controls autoplay loop>
+                <source src="wedding-video.mp4" type="video/mp4">
+            </video>
+            
+            Option 2: YouTube embed - replace VIDEO_ID:
+            <iframe width="100%" height="400" 
+                src="https://www.youtube.com/embed/VIDEO_ID" 
+                frameborder="0" allowfullscreen></iframe>
+        -->
+        <div class="video-placeholder">
+            <span class="play-icon">🎬</span>
+            <h3 style="color:#FFD700; margin-bottom:10px;">Wedding Invitation Video</h3>
+            <p style="color:#ffe4e8;">
+                మీ వీడియో ఇక్కడ చేర్చండి<br>
+                (Add your wedding video here)
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    <h2>💑 Sravani & Bhasker Rao 💑</h2>
+    <p>🗓️ May 10, 2026</p>
+    <p>📍 బురుగ గ్రామం, వీరఘట్టం మండలం, పార్వతీపురం మాన్య జిల్లా</p>
+    <p>💖 మీ రాక మాకు ఆనందం కలిగిస్తుంది! 💖</p>
+    <br>
+    <p style="color:#ff69b4; font-size:1.5em;">
+        🌸 శుభాకాంక్షలు! 🌸
+    </p>
+    <br>
+    <a href="index.html" class="back-btn">🗺️ Map చూడండి</a>
+</div>
+
+<script>
+    // Stars Background
+    const starsDiv = document.getElementById('stars');
+    for (let i = 0; i < 100; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 100 + 'vh';
+        star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        star.style.animationDelay = (Math.random() * 5) + 's';
+        starsDiv.appendChild(star);
+    }
+
+    // Confetti
+    const confettiDiv = document.getElementById('confetti');
+    const colors = ['#FFD700', '#ff69b4', '#ff0000', '#00ff00', '#ffffff', '#ff6347'];
+    for (let i = 0; i < 50; i++) {
+        const piece = document.createElement('div');
+        piece.classList.add('confetti-piece');
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        piece.style.animationDelay = (Math.random() * 5) + 's';
+        piece.style.width = (Math.random() * 10 + 5) + 'px';
+        piece.style.height = (Math.random() * 10 + 5) + 'px';
+        confettiDiv.appendChild(piece);
+    }
+
+    // Countdown Timer
+    function updateCountdown() {
+        const weddingDate = new Date('May 10, 2026 08:00:00').getTime();
+        const now = new Date().getTime();
+        const diff = weddingDate - now;
+
+        if (diff > 0) {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        } else {
+            document.getElementById('days').textContent = '0';
+            document.getElementById('hours').textContent = '0';
+            document.getElementById('minutes').textContent = '0';
+            document.getElementById('seconds').textContent = '0';
+        }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
